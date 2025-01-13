@@ -1,0 +1,39 @@
+<div class="chat-container" [class.expanded]="isExpanded" [class.dark-mode]="isDarkMode">
+    <!-- Chat Button -->
+    <button class="chat-button" (click)="toggleChat()" [class.expanded]="isExpanded" aria-label="Toggle chat">
+        <span class="material-icons-outlined">
+            {{ isExpanded ? 'close' : 'chat' }}
+        </span>
+    </button>
+
+    <!-- Chat Window -->
+    <div class="chat-window" *ngIf="isExpanded">
+        <div class="chat-header">
+            <h3>Global Chat</h3>
+            <span class="online-count">
+                <span class="green-dot"></span>
+                {{ onlineUsers }} online
+            </span>
+        </div>
+        <div class="chat-messages" #messageContainer (scroll)="onScroll()">
+            <div *ngFor="let displayMsg of messages" class="message"
+                [class.own-message]="displayMsg.sender === currentUser">
+                <div class="message-header">
+                    <span class="sender">{{ displayMsg.sender }}</span>
+                    <span class="timestamp">{{
+                        displayMsg.timestamp | date : 'shortTime'
+                        }}</span>
+                </div>
+                <div class="message-content">{{ displayMsg.message }}</div>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type a message..."
+                [disabled]="!isConnected" />
+            <button (click)="sendMessage()" [disabled]="!newMessage.trim() || !isConnected">
+                <span class="material-icons-outlined">send</span>
+            </button>
+        </div>
+    </div>
+</div>

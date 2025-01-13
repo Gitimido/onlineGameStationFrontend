@@ -1,0 +1,201 @@
+.chat-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chat-button {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.chat-button:hover {
+  transform: scale(1.05);
+  background-color: #45a049;
+}
+
+.chat-window {
+  position: absolute;
+  bottom: 4.5rem;
+  right: 0;
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-header {
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.online-count {
+  font-size: 0.875rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.green-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message {
+  max-width: 80%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  align-self: flex-start;
+  word-wrap: break-word; /* Ensures long words break and wrap */
+  white-space: pre-wrap; /* Preserves whitespace and wraps text */
+  margin-bottom: 0.5rem; /* Adds space between messages */
+  line-height: 1.4; /* Improves readability */
+}
+
+.own-message {
+  background-color: #e3f2fd;
+  align-self: flex-end;
+  word-wrap: break-word; /* Ensures long words break and wrap */
+  white-space: pre-wrap; /* Preserves whitespace and wraps text */
+  margin-bottom: 0.5rem; /* Adds space between messages */
+  line-height: 1.4; /* Improves readability */
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.sender {
+  font-weight: bold;
+  color: #333;
+}
+
+.timestamp {
+  color: #666;
+}
+
+.chat-input {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.chat-input button {
+  padding: 0.5rem;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-input button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Dark mode styles */
+.dark-mode .chat-window {
+  background-color: #2d2d2d;
+  color: white;
+}
+
+.dark-mode .chat-header {
+  background-color: #1f1f1f;
+  border-bottom-color: #3d3d3d;
+}
+
+.dark-mode .message {
+  background-color: #3d3d3d;
+}
+
+.dark-mode .own-message {
+  background-color: #1e3a5f;
+}
+
+.dark-mode .chat-input {
+  border-top-color: #3d3d3d;
+}
+
+.dark-mode .chat-input input {
+  background-color: #1f1f1f;
+  border-color: #3d3d3d;
+  color: white;
+}
+.dark-mode .sender {
+  font-weight: bold;
+  color: white;
+}
+
+.dark-mode .timestamp {
+  font-weight: bold;
+  color: red;
+}

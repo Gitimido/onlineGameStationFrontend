@@ -1,0 +1,146 @@
+<!-- Enhanced home.component.html -->
+<div class="app-container" [class.dark-mode]="isDarkMode">
+    <!-- Modernized Top Bar -->
+    <header class="top-bar">
+        <div class="site-title">
+            <h1>TomatoesLand</h1>
+        </div>
+        <div class="user-section">
+            <!-- User name input/display section -->
+            <div class="user-name-container" *ngIf="userName">
+
+                <div class="welcome-message" *ngIf="userName">
+                    <span>Welcome, {{ userName }}</span>
+                </div>
+
+                <input type="text" [(ngModel)]="tempUserName" placeholder="Enter your name" class="name-input"
+                    (keyup.enter)="setUserName()" maxlength="15" />
+                <button class="set-name-btn" (click)="setUserName()" [disabled]="!userName.trim()">
+                    <span class="material-icons-outlined">check</span>
+                </button>
+            </div>
+        </div>
+        <div class="header-actions">
+            <!-- Rest of your header actions -->
+            <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme">
+                <span class="material-icons-outlined">{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</span>
+            </button>
+            <!-- Enhanced Live Players Display -->
+            <div class="live-players" (mouseover)="showPlayersList = true" (mouseleave)="showPlayersList = false"
+                [attr.aria-expanded]="showPlayersList">
+                <div class="players-summary">
+                    <span class="material-icons-outlined">groups</span>
+                    <span class="live-count">{{ onlineUsers }}</span>
+                </div>
+
+                <div class="players-list" *ngIf="showPlayersList">
+                    <div class="list-header">
+                        <h4>Active Players</h4>
+                        <span class="material-icons-outlined">people</span>
+                    </div>
+                    <ul>
+                        <li *ngFor="let player of livePlayers" class="player-item">
+                            <span class="player-avatar">{{ player[0] }}</span>
+                            <span class="player-name">{{ player }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+
+    <!-- Enhanced Sidenav -->
+    <nav class="sidenav" [class.open]="isSidenavOpen" [class.dark-mode]="isDarkMode">
+        <div class="toggle-arrow" (click)="toggleSidenav()" [attr.aria-pressed]="isSidenavOpen">
+            <span class="material-icons-outlined">{{ arrowIcon }}</span>
+        </div>
+
+        <div class="sidenav-content">
+            <div class="nav-section">
+                <h3 class="section-title">Menu</h3>
+                <ul>
+                    <li [class.active]="currentSection === 'home'" (click)="navigateTo('home')">
+                        <span class="material-icons-outlined">home</span>
+                        <span class="menu-text">Home</span>
+                    </li>
+                    <li [class.active]="currentSection === 'games'" (click)="navigateTo('games')">
+                        <span class="material-icons-outlined">sports_esports</span>
+                        <span class="menu-text">Games</span>
+                    </li>
+                    <li [class.active]="currentSection === 'leaderboard'" (click)="navigateTo('leaderboard')">
+                        <span class="material-icons-outlined">leaderboard</span>
+                        <span class="menu-text">Leaderboard</span>
+                    </li>
+                    <li [class.active]="currentSection === 'about'" (click)="navigateTo('about')">
+                        <span class="material-icons-outlined">info</span>
+                        <span class="menu-text">About</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="section-title">Categories</h3>
+                <ul>
+                    <li *ngFor="let category of gameCategories" [class.active]="currentCategory === category.id"
+                        (click)="filterByCategory(category.id)">
+                        <span class="material-icons-outlined">{{ category.icon }}</span>
+                        <span class="menu-text">{{ category.name }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Main Content -->
+    <main class="main-content" [class.shifted]="isSidenavOpen" [class.dark-mode]="isDarkMode">
+        <!-- Games Grid -->
+        <section class="games-container">
+            <!-- Category Pills (new) -->
+            <div class="category-pills" *ngIf="showCategories">
+                <button class="pill" *ngFor="let category of gameCategories"
+                    [class.active]="currentCategory === category.id" (click)="filterByCategory(category.id)">
+                    <span class="material-icons-outlined">{{ category.icon }}</span>
+                    {{ category.name }}
+                </button>
+            </div>
+
+            <!-- Enhanced Game Cards -->
+            <div class="games-grid">
+                <article class="game-card" *ngFor="let game of filteredGames">
+                    <div class="card-image">
+                        <img [src]="game.img" [alt]="game.title" loading="lazy" />
+                        <div class="game-badge" *ngIf="game.isNew">NEW!</div>
+                    </div>
+
+                    <div class="card-content">
+                        <h3>{{ game.title }}</h3>
+                        <p class="description">{{ game.description }}</p>
+
+                        <div class="game-stats">
+                            <div class="rooms-info">
+                                <span class="green-dot" *ngIf="game.activeRooms > 0"></span>
+                                <span>{{ game.activeRooms }} Active Rooms</span>
+                            </div>
+
+                            <div class="player-count">
+                                <span class="material-icons-outlined">person</span>
+                                {{ game.currentPlayers }}/{{ game.maxPlayers }}
+                            </div>
+                        </div>
+
+                        <button class="play-btn" (click)="playGame(game.id)">
+                            <span class="material-icons-outlined">play_arrow</span>
+                            Play Now
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+</div>
+
+
+<app-chat></app-chat>
